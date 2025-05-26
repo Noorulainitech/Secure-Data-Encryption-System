@@ -110,22 +110,22 @@ elif choice == "login":
             st.session_state.failed_attempts += 1
             remaining = 3 - st.session_state.failed_attempts
             st.error(f"Invalid Credential Attempts left: {remaining}")
-        elif choice == "Store Data":
-            if not st.session_status.authenticated_user:
-                st.warning("Please login first.")   
-            else:
-                st.subheader(" Store Encrypted Data")
-                data = st.text_area("Enter data to encrpty")
-                passkey = st.text_input("Encryption key (passphrase)", type="password")
+elif choice == "Store Data":
+    if not st.session_status.authenticated_user:
+        st.warning("Please login first.")   
+    else:
+        st.subheader(" Store Encrypted Data")
+        data = st.text_area("Enter data to encrpty")
+        passkey = st.text_input("Encryption key (passphrase)", type="password")
 
-                if st.button("Encrypt and Save"):
-                    encrypted = encrypt_text(data, passkey)
-                    stored_data[st.session_state.authenticated_user]["data"].append(encrypted)
-                    save_data(stored_data)
-                    st.success("Data Encrypted and save successfull!")
+        if st.button("Encrypt and Save"):
+            encrypted = encrypt_text(data, passkey)
+            stored_data[st.session_state.authenticated_user]["data"].append(encrypted)
+            save_data(stored_data)
+            st.success("Data Encrypted and save successfull!")
 
-                else:
-                    st.error("All field are required to fill.")
+        else:
+            st.error("All field are required to fill.")
 
 # data retrieve 
 
