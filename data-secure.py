@@ -92,24 +92,31 @@ elif choice == "Register":
             st.error("Both fields are required.")
     
 elif choice == "login":
-    st.subheader("🔑User Login")
-    if time.time() < st.session_state.lockout_time:
-        remaining = int(st.session_state.lockout_time - time.time())
-        st.error(f"Too many failed attempts. Please wait {remaining} seconds.")
-        st.stop()
+        st.subheader("🔑User Login")
+    
+        if time.time() < st.session_state.lockout_time:
+            remaining = int(st.session_state.lockout_time - time.time())
+            st.error(f"Too many failed attempts. Please wait {remaining} seconds.")
+            st.stop()
 
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
 
-    if st.button("Login"):
-        if username in stored_data and stored_data[username]["password"] == hash_password(password):
-            st.session_state.authenticated_user = username
-            st.session_state.failed_attempts = 0
-            st.success(f" ✅ Welcome {username}")
-        else:
-            st.session_state.failed_attempts += 1
-            remaining = 3 - st.session_state.failed_attempts
-            st.error(f"Invalid Credential Attempts left: {remaining}")
+        if st.button("Login"):
+            if username in stored_data and stored_data[username]["password"] == hash_password(password):
+                st.session_state.authenticated_user = username
+                st.session_state.failed_attempts = 0
+                st.success(f" ✅ Welcome {username}")
+            else:
+                st.session_state.failed_attempts += 1
+                remaining = 3 - st.session_state.failed_attempts
+                st.error(f"Invalid Credential Attempts left: {remaining}")
+
+                if st.session_state.failed_attempts >= 3
+                    st.session_state_lockout_time = time.time() + LOCKOUT_DURATION
+                    st.error("To many failed attempts. Locked for 60 seconds")
+                    st.stop()
+
 elif choice == "Store Data":
     if not st.session_status.authenticated_user:
         st.warning("Please login first.")   
