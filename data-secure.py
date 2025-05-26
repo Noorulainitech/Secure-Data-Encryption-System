@@ -118,7 +118,7 @@ elif choice == "Login":
                     st.stop()
 
 elif choice == "Store Data":
-    if not st.session_status.authenticated_user:
+    if not st.session_state.authenticated_user:
         st.warning("Please login first.")   
     else:
         st.subheader(" Store Encrypted Data")
